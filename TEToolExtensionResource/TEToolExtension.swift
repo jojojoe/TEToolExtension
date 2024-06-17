@@ -13,41 +13,41 @@ import DeviceKit
 
 //MARK: UIKit
 extension UIFont {
-    static let FontName_PierSans = "PierSans"
-    static let FontName_PierSans700 = "PierSans-Bold"
-    static let FontName_PierSans900 = "PierSans-Bold"
-    static let FontName_AvenirMedium = "Avenir-Medium"
-    static let FontName_AvenirHeavy = "Avenir-Heavy"
-    static let FontName_AvenirBlack = "Avenir-Black"
-    static let FontName_NotoSansOriyaBold = "NotoSansOriya-Bold"
+    public static let FontName_PierSans = "PierSans"
+    public static let FontName_PierSans700 = "PierSans-Bold"
+    public static let FontName_PierSans900 = "PierSans-Bold"
+    public static let FontName_AvenirMedium = "Avenir-Medium"
+    public static let FontName_AvenirHeavy = "Avenir-Heavy"
+    public static let FontName_AvenirBlack = "Avenir-Black"
+    public static let FontName_NotoSansOriyaBold = "NotoSansOriya-Bold"
     
 }
 
 extension UIScreen {
     
-    static func width() -> CGFloat {
+    public static func width() -> CGFloat {
         return self.main.bounds.size.width
     }
     
-    static func height() -> CGFloat {
+    public static func height() -> CGFloat {
         return self.main.bounds.size.height
     }
     
-    static func isDevice8SE() -> Bool {
+    public static func isDevice8SE() -> Bool {
         if Device.current.diagonal <= 4.7 {
             return true
         }
         return false
     }
     
-    static func isDevice8SEPaid() -> Bool {
+    public static func isDevice8SEPaid() -> Bool {
         if Device.current.diagonal <= 4.7 || Device.current.diagonal >= 7.0 {
             return true
         }
         return false
     }
     
-    static func isDevice8Plus() -> Bool {
+    public static func isDevice8Plus() -> Bool {
         if Device.current.diagonal == 5.5 {
             return true
         }
@@ -65,7 +65,7 @@ public extension UIView {
     }
     
     @discardableResult
-    func shadow (
+    public func shadow (
         color: UIColor?,
         radius: CGFloat? = nil,
         opacity: Float? = nil,
@@ -94,52 +94,52 @@ public extension UIView {
     }
     
     @discardableResult
-    func crop() -> Self {
+    public func crop() -> Self {
         contentMode()
         clipsToBounds()
         return self
     }
 
     @discardableResult
-    func cornerRadius(_ value: CGFloat, masksToBounds: Bool = true) -> Self {
+    public func cornerRadius(_ value: CGFloat, masksToBounds: Bool = true) -> Self {
         layer.cornerRadius = value
         layer.masksToBounds = masksToBounds
         return self
     }
 
     @discardableResult
-    func borderColor(_ value: UIColor, width: CGFloat = 1) -> Self {
+    public func borderColor(_ value: UIColor, width: CGFloat = 1) -> Self {
         layer.borderColor = value.cgColor
         layer.borderWidth = width
         return self
     }
 
     @discardableResult
-    func contentMode(_ value: UIView.ContentMode = .scaleAspectFill) -> Self {
+    public func contentMode(_ value: UIView.ContentMode = .scaleAspectFill) -> Self {
         contentMode = value
         return self
     }
 
     @discardableResult
-    func clipsToBounds(_ value: Bool = true) -> Self {
+    public func clipsToBounds(_ value: Bool = true) -> Self {
         clipsToBounds = value
         return self
     }
 
     @discardableResult
-    func tag(_ value: Int) -> Self {
+    public func tag(_ value: Int) -> Self {
         tag = value
         return self
     }
 
     @discardableResult
-    func tintColor(_ value: UIColor) -> Self {
+    public func tintColor(_ value: UIColor) -> Self {
         tintColor = value
         return self
     }
 
     @discardableResult
-    func backgroundColor(_ value: UIColor) -> Self {
+    public func backgroundColor(_ value: UIColor) -> Self {
         backgroundColor = value
         return self
     }
@@ -148,28 +148,28 @@ public extension UIView {
 
 public extension UIImageView {
     @discardableResult
-    func image(_ value: String?, _: Bool = false) -> Self {
+    public func image(_ value: String?, _: Bool = false) -> Self {
         guard let value = value else { return self }
         image = UIImage(named: value)
         return self
     }
     
     @discardableResult
-    func highlightedImage(_ value: String?, _: Bool = false) -> Self {
+    public func highlightedImage(_ value: String?, _: Bool = false) -> Self {
         guard let value = value else { return self }
         highlightedImage = UIImage(named: value)
         return self
     }
     
     @discardableResult
-    func image(_ valueImg: UIImage?) -> Self {
+    public func image(_ valueImg: UIImage?) -> Self {
         guard let valueImg = valueImg else { return self }
         image = valueImg
         return self
     }
     
     @discardableResult
-    func isHighlighted(_ value: Bool = false) -> Self {
+    public func isHighlighted(_ value: Bool = false) -> Self {
         isHighlighted = value
         return self
     }
@@ -214,7 +214,7 @@ extension UILabel {
     
     
     @discardableResult
-    func adjustsFontSizeToFitWidth(_ value: Bool = true) -> Self {
+    public func adjustsFontSizeToFitWidth(_ value: Bool = true) -> Self {
         adjustsFontSizeToFitWidth = value
         return self
     }
@@ -273,19 +273,19 @@ extension UIButton {
     }
     
     @discardableResult
-    func isEnabled(_ value: Bool = false) -> Self {
+    public func isEnabled(_ value: Bool = false) -> Self {
         isEnabled = value
         return self
     }
     
     @discardableResult
-    func isSelected(_ value: Bool = false) -> Self {
+    public func isSelected(_ value: Bool = false) -> Self {
         isSelected = value
         return self
     }
     
     // 禁用按钮并设置超时时间
-    func disable(for duration: TimeInterval) {
+    public func disable(for duration: TimeInterval) {
         self.isEnabled = false
         DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
             self.isEnabled = true
@@ -315,14 +315,14 @@ public extension UITextField {
      - Returns: Itself for chaining purposes
      */
     @discardableResult
-    func placeholder(_ t: String) -> Self {
+    public func placeholder(_ t: String) -> Self {
         placeholder = t
         return self
     }
 }
 
 extension UIButton {
-    struct Item {
+    public struct Item {
         let title: String
         let icon: String
         let backgroundColor: UIColor
@@ -355,7 +355,7 @@ extension UIButton {
         }
     }
 
-    convenience init(buttonItem: Item) {
+    public convenience init(buttonItem: Item) {
         self.init(frame: .zero)
 
         backgroundColor = buttonItem.backgroundColor
@@ -364,7 +364,7 @@ extension UIButton {
         addEventHandler(handler: buttonItem.handler, controlEvent: .touchUpInside)
     }
 
-    func addEventHandler(handler: @escaping () -> Void, controlEvent: UIControl.Event) {
+    public func addEventHandler(handler: @escaping () -> Void, controlEvent: UIControl.Event) {
         let adapter = ButtonAdapter(handler: handler, controlEvent: controlEvent)
         addTarget(adapter, action: #selector(ButtonAdapter.handle), for: controlEvent)
         adapters.append(adapter)
@@ -462,7 +462,7 @@ extension UITextView {
 
 //MARK: Foundation
 extension Double {
-   func roundTo(places:Int) -> Double {
+   public func roundTo(places:Int) -> Double {
        let divisor = pow(10.0, Double(places))
        return (self * divisor).rounded() / divisor
 
@@ -488,7 +488,7 @@ extension UIView {
     ///   - locations: 颜色位置数组，可选，默认为nil
     ///   - startPoint: 渐变开始点
     ///   - endPoint: 渐变结束点
-    func applyGradient(colors: [UIColor], locations: [NSNumber]? = nil, startPoint: CGPoint = CGPoint(x: 0.5, y: 0.0), endPoint: CGPoint = CGPoint(x: 0.5, y: 1.0)) {
+    public func applyGradient(colors: [UIColor], locations: [NSNumber]? = nil, startPoint: CGPoint = CGPoint(x: 0.5, y: 0.0), endPoint: CGPoint = CGPoint(x: 0.5, y: 1.0)) {
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = colors.map { $0.cgColor }
         gradientLayer.locations = locations
