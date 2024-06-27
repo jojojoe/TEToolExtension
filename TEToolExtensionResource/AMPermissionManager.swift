@@ -45,7 +45,7 @@ extension AMPermissionManager {
 
 //MARK: Album Permission
 extension AMPermissionManager {
-    func requestAlbumPermission(completion: @escaping ((_ authStatus: PHAuthorizationStatus, _ granted: Bool, _ firstTime: Bool)->Void)) {
+    public func requestAlbumPermission(completion: @escaping ((_ authStatus: PHAuthorizationStatus, _ granted: Bool, _ firstTime: Bool)->Void)) {
         if #available(iOS 14, *) {
             let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
             switch status {
@@ -85,7 +85,7 @@ extension AMPermissionManager {
         }
     }
     
-    func requestAlbumOnlySavePermission(completion: @escaping ((_ authStatus: PHAuthorizationStatus, _ granted: Bool, _ firstTime: Bool)->Void)) {
+    public func requestAlbumOnlySavePermission(completion: @escaping ((_ authStatus: PHAuthorizationStatus, _ granted: Bool, _ firstTime: Bool)->Void)) {
         if #available(iOS 14, *) {
             let status = PHPhotoLibrary.authorizationStatus(for: .addOnly)
             switch status {

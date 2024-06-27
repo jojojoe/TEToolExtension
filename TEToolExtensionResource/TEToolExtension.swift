@@ -5,11 +5,13 @@
 //  Created by wqqqq on 2024/6/17.
 //
 //
+
 import Foundation
 import UIKit
 import SnapKit
 import SwifterSwift
 import DeviceKit
+
 
 //MARK: UIKit
 extension UIFont {
@@ -292,7 +294,48 @@ extension UIButton {
         }
     }
 }
-
+public extension UIButton {
+    
+    /**
+     Sets the title of the button for normal State
+     
+     Essentially a shortcut for `setTitle("MyText", forState: .Normal)`
+     
+     - Returns: Itself for chaining purposes
+    */
+    @discardableResult
+    func text(_ t: String) -> Self {
+        setTitle(t, for: .normal)
+        return self
+    }
+    
+    /**
+     Sets the localized key for the button's title in normal State
+     
+     Essentially a shortcut for `setTitle(NSLocalizedString("MyText", comment: "")
+     , forState: .Normal)`
+     
+     - Returns: Itself for chaining purposes
+     */
+    @discardableResult
+    func textKey(_ t: String) -> Self {
+        text(NSLocalizedString(t, comment: ""))
+        return self
+    }
+    
+    /**
+     Sets the image of the button in normal State
+     
+     Essentially a shortcut for `setImage(UIImage(named:"X"), forState: .Normal)`
+     
+     - Returns: Itself for chaining purposes
+     */
+    @discardableResult
+    func image(_ s: String) -> Self {
+        setImage(UIImage(named: s), for: .normal)
+        return self
+    }
+}
 class DBDelayButton: UIButton {
     private var canTap = true
 
@@ -508,3 +551,214 @@ extension UIView {
     }
 }
 
+ 
+
+public extension UIView {
+    
+    struct CustomLoadingViewConstants {
+        static let Tag = 10001
+    }
+
+    func customShowLoading(loadingImgName: String, sizeWidth: CGFloat, duration: Double = 1) {
+
+        if self.viewWithTag(CustomLoadingViewConstants.Tag) != nil {
+            // If loading view is already found in current view hierachy, do nothing
+            return
+        }
+        
+        let loadingImgV = UIImageView(image: UIImage(named: loadingImgName))
+        loadingImgV.bounds = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: sizeWidth, height: sizeWidth))
+        loadingImgV.center = CGPoint(x: self.bounds.size.width / 2, y: self.bounds.size.height / 2)
+        self.addSubview(loadingImgV)
+        //
+        let animation = CABasicAnimation()
+        animation.keyPath = "transform.rotation.z"
+        animation.fromValue = degreesToRadians(degrees: 0)
+        animation.toValue = degreesToRadians(degrees: 360)
+        animation.duration = duration
+        animation.repeatCount = HUGE
+        //
+        loadingImgV.layer.add(animation, forKey: "")
+        loadingImgV.tag = CustomLoadingViewConstants.Tag
+        
+        loadingImgV.alpha = 1
+         
+    }
+
+    func customHideLoading() {
+
+        if let indicatorView = self.viewWithTag(CustomLoadingViewConstants.Tag) {
+            indicatorView.alpha = 1
+            UIView.animate(withDuration: 0.3) {
+                indicatorView.alpha = 0
+                indicatorView.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
+            } completion: { completed in
+                indicatorView.removeFromSuperview()
+            }
+
+             
+        }
+    }
+    func degreesToRadians(degrees: CGFloat) -> CGFloat {
+        return degrees * CGFloat(CGFloat.pi / 180)
+    }
+}
+
+
+extension UIViewController {
+    struct AlertItem {
+        let btnName: String
+        var handler: ((UIAlertAction) -> Void)? = nil
+    }
+    func showAlert(title: String, message: String, btnActions: [AlertItem]) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        if btnActions.count == 1 {
+            let item = btnActions[0]
+            let button = UIAlertAction(title: item.btnName, style: .cancel, handler: item.handler)
+            alert.addAction(button)
+        } else if btnActions.count == 2 {
+            let item1 = btnActions[0]
+            let button1 = UIAlertAction(title: item1.btnName, style: .cancel, handler: item1.handler)
+            alert.addAction(button1)
+            //
+            let item2 = btnActions[1]
+            let button2 = UIAlertAction(title: item2.btnName, style: .default, handler: item2.handler)
+            alert.addAction(button2)
+        }
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+}
+
+extension Double {
+    func rounded(digits: Int) -> Double {
+        let multiplier = pow(10.0, Double(digits))
+        return (self * multiplier).rounded() / multiplier
+    }
+    
+    func accuracyToString(position: Int) -> String {
+        
+        let roundingBehavior = NSDecimalNumberHandler(roundingMode: .plain, scale: Int16(position), raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: true)
+        let ouncesDecimal: NSDecimalNumber = NSDecimalNumber(value: self)
+        let roundedOunces: NSDecimalNumber = ouncesDecimal.rounding(accordingToBehavior: roundingBehavior)
+        var formatterString : String = "0."
+        if position > 0 {
+            for _ in 0 ..< position {
+                formatterString.append("0")
+            }
+        }else {
+            formatterString = "0"
+        }
+        let formatter : NumberFormatter = NumberFormatter()
+        formatter.positiveFormat = formatterString
+        var roundingStr = formatter.string(from: roundedOunces) ?? "0.00"
+        if roundingStr.range(of: ".") != nil {
+            let sub1 = String(roundingStr.suffix(1))
+            if sub1 == "0" {
+                roundingStr = String(roundingStr.prefix(roundingStr.count-1))
+                let sub2 = String(roundingStr.suffix(1))
+                if sub2 == "0" {
+                    roundingStr = String(roundingStr.prefix(roundingStr.count-2))
+                }
+            }
+        }
+        
+        return roundingStr
+    }
+    
+}
+
+extension Date {
+    func unixTimestampString() -> String {
+        let timestamp = self.unixTimestamp
+        let fileName = CLongLong(round(timestamp*1000)).string
+        return fileName
+    }
+}
+ 
+extension NSObject {
+    func topMostViewController(base: UIViewController? = UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController) -> UIViewController? {
+        if let nav = base as? UINavigationController {
+            return topMostViewController(base: nav.visibleViewController)
+        } else if let tab = base as? UITabBarController, let selected = tab.selectedViewController {
+            return topMostViewController(base: selected)
+        } else if let presented = base?.presentedViewController {
+            return topMostViewController(base: presented)
+        } else {
+            return base
+        }
+    }
+}
+
+extension String {
+    func animatedGIFToImages() -> [UIImage] {
+        do {
+            let gifData = try Data(contentsOf: Bundle.main.url(forResource: self, withExtension: "gif")!)
+            guard let source = CGImageSourceCreateWithData(gifData as CFData, nil) else {
+                return []
+            }
+            let count = CGImageSourceGetCount(source)
+            var images = [UIImage](repeating: UIImage(), count: count)
+
+            for i in 0..<count {
+                if let cgImage = CGImageSourceCreateImageAtIndex(source, i, nil) {
+                    images[i] = UIImage(cgImage: cgImage)
+                }
+            }
+            return images
+        } catch {
+            return []
+        }
+        
+    }
+}
+
+
+class GLLinkLabel: UIView, UITextViewDelegate {
+
+    var contentText: String
+    let textV = UITextView()
+    
+    init(frame: CGRect, contentText: String, font: UIFont, alignment: NSTextAlignment = .left, textColor: UIColor, linkColor: UIColor) {
+        self.contentText = contentText
+        super.init(frame: frame)
+        self.backgroundColor(.clear)
+        let para = NSMutableParagraphStyle()
+        para.alignment = alignment
+        let attributedText = NSMutableAttributedString(string: contentText, attributes: [.foregroundColor : textColor, .font : font, .paragraphStyle : para])
+        textV.backgroundColor(.clear)
+        textV.attributedText = attributedText
+        textV.delegate = self
+        textV.isEditable = false
+        textV.linkTextAttributes = [.foregroundColor : linkColor]
+        textV.adhere(toSuperview: self) {
+            $0.edges.equalToSuperview()
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func addLink(linkName: String, linkStr: String, hasUndleLine: Bool = true) {
+        
+        if let range = contentText.range(of: linkName, options: .caseInsensitive) {
+            let nsRange = NSRange(range, in: contentText)
+            let attribute = NSMutableAttributedString(attributedString: textV.attributedText)
+            attribute.addAttribute(.link, value: linkStr, range: nsRange)
+            if hasUndleLine {
+                attribute.addAttributes([.underlineStyle : 1], range: nsRange)
+            }
+            textV.attributedText = attribute
+        }
+    }
+    
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        debugPrint("shouldInteractWith - \(URL)")
+        
+        return true
+    }
+    
+}
+ 
