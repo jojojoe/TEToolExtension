@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>swift_textFieldDelegate</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>extension &lt;#VC#&gt;: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        debugPrint("textFieldDidEndEditing")
+        
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -&gt; Bool {
+        
+        if string == "" {
+            clearContentBtn.isHidden = true
+            self.tagList = []
+            self.contentTabelView.reloadData()
+        } else {
+            clearContentBtn.isHidden = false
+            
+            TaskDelay.default.taskDelay(afterTime: 0.8) {[weak self] in
+                guard let `self` = self else {return}
+                self.loadTagWithString(string: textField.text ?? "ins") {[weak self] (tagList) in
+                    guard let `self` = self else {return}
+                    self.tagList = tagList
+                    self.contentTabelView.reloadData()
+                }
+            }
+        }
+        debugPrint("shouldChangeCharactersIn")
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -&gt; Bool {
+        textField.resignFirstResponder()
+        
+        return true
+    }
+    
+    
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>4EC06E1A-2041-4E43-BDD5-E1AAB4CAF3E7</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>swift_textFieldDelegate</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>swift_textFieldDelegate</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

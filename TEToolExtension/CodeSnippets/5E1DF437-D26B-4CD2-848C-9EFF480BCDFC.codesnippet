@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>swift_textview_countLimit</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>extension &lt;#SBTextInputVC#&gt;: UITextViewDelegate {
+    func setupTextViewNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(textViewNotifitionAction), name: UITextView.textDidChangeNotification, object: nil);
+    }
+    @objc
+    func textViewNotifitionAction(userInfo:NSNotification){
+
+        if &lt;#textView#&gt;.text.count &gt; &lt;#maxTextSize#&gt; {
+            let selectRange = &lt;#textView#&gt;.markedTextRange
+            if let selectRange = selectRange {
+                let position =  &lt;#textView#&gt;.position(from: (selectRange.start), offset: 0)
+                if (position != nil) {
+                    // 高亮部分不进行截取，否则中文输入会把高亮区域的拼音强制截取为字母，等高亮取消后再计算字符总数并截取
+                    return
+                }
+            }
+
+            &lt;#textView#&gt;.text = String(&lt;#textView#&gt;.text[..&lt;String.Index(encodedOffset: &lt;#maxTextSize#&gt;)])
+
+            // 对于粘贴文字的case，粘贴结束后若超出字数限制，则让光标移动到末尾处
+            &lt;#textView#&gt;.selectedRange = NSRange(location: &lt;#textView#&gt;.text.count, length: 0)
+        }
+        
+        
+        
+    }
+     
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -&gt; Bool {
+        // range: The range of characters to be replaced.(location、count)
+        // 高亮控制
+        let selectedRange = textView.markedTextRange
+        if let selectedRange = selectedRange {
+            let position =  textView.position(from: (selectedRange.start), offset: 0)
+            if position != nil {
+                let startOffset = textView.offset(from: textView.beginningOfDocument, to: selectedRange.start)
+                let endOffset = textView.offset(from: textView.beginningOfDocument, to: selectedRange.end)
+                let offsetRange = NSMakeRange(startOffset, endOffset - startOffset) // 高亮部分起始位置
+                if offsetRange.location &lt; &lt;#maxTextSize#&gt; {
+                    // 高亮部分先不进行字数统计
+                    return true
+                } else {
+                    debugPrint("字数已达上限")
+                    return false
+                }
+            }
+        }
+
+        // 在最末添加
+        if range.location &gt;= &lt;#maxTextSize#&gt; {
+            debugPrint("字数已达上限")
+            return false
+        }
+
+        // 在其他位置添加
+        if textView.text.count &gt;= &lt;#maxTextSize#&gt; &amp;&amp; range.length &lt;  text.count {
+            debugPrint("字数已达上限")
+            return false
+        }
+
+        return true
+    }
+    
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>5E1DF437-D26B-4CD2-848C-9EFF480BCDFC</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>swift_textview_countLimit</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>swift_textview_countLimit</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

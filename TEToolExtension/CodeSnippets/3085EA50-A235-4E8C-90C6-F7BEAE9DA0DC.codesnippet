@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>swift_Textfield_limit</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>
+extension TWEditBottomView: UITextFieldDelegate {
+    
+    func setupTextViewNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(textViewNotifitionAction), name: UITextField.textDidChangeNotification, object: nil);
+    }
+    @objc
+    func textViewNotifitionAction(userInfo:NSNotification){
+        guard let textView = userInfo.object as? UITextView else { return }
+        if textView.text.count &gt;= maxLableCount {
+            let selectRange = textView.markedTextRange
+            if let selectRange = selectRange {
+                let position =  textView.position(from: (selectRange.start), offset: 0)
+                if (position != nil) {
+                    // 高亮部分不进行截取，否则中文输入会把高亮区域的拼音强制截取为字母，等高亮取消后再计算字符总数并截取
+                    return
+                }
+                
+            }
+            textView.text = String(textView.text[..&lt;String.Index(encodedOffset: maxLableCount)])
+            
+            // 对于粘贴文字的case，粘贴结束后若超出字数限制，则让光标移动到末尾处
+            textView.selectedRange = NSRange(location: textView.text.count, length: 0)
+        }
+        
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        debugPrint("textFieldDidBeginEditing")
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -&gt; Bool {
+        let selectedRange = textField.markedTextRange
+        if let selectedRange = selectedRange {
+            let position =  textField.position(from: (selectedRange.start), offset: 0)
+            if position != nil {
+                let startOffset = textField.offset(from: textField.beginningOfDocument, to: selectedRange.start)
+                let endOffset = textField.offset(from: textField.beginningOfDocument, to: selectedRange.end)
+                let offsetRange = NSMakeRange(startOffset, endOffset - startOffset) // 高亮部分起始位置
+                if offsetRange.location &lt; maxLableCount {
+                    // 高亮部分先不进行字数统计
+                    return true
+                } else {
+                    debugPrint("字数已达上限")
+                    return false
+                }
+            }
+        }
+        
+        // 在最末添加
+        if range.location &gt;= maxLableCount {
+            debugPrint("字数已达上限")
+            return false
+        }
+        
+        // 在其他位置添加
+        if textField.text?.count ?? 0 &gt;= maxLableCount &amp;&amp; range.length &lt;  string.count {
+            debugPrint("字数已达上限")
+            return false
+        }
+        
+        if (textField.text ?? "" + string).count &gt; maxLableCount {
+            
+            let finalString = string.prefix(maxLableCount - (textField.text?.count ?? 0))
+            textField.text = (textField.text ?? "" + finalString)
+        }
+        
+        return true
+    }
+    
+}
+
+</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>3085EA50-A235-4E8C-90C6-F7BEAE9DA0DC</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>swift_Textfield_limit</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>swift_Textfield_limit</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

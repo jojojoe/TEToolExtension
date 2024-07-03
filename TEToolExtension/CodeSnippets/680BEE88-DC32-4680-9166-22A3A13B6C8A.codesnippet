@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>swift_notification_background</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>func setupNotification() {
+        NotificationCenter.default.addObserver(self, selector:#selector(becomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        //注册进入后台的通知
+        NotificationCenter.default.addObserver(self, selector:#selector(becomeDeath), name: UIApplication.willResignActiveNotification, object: nil)
+    }
+    @objc
+    func becomeActive(noti:Notification){
+        DispatchQueue.main.async {
+            [weak self] in
+            guard let `self` = self else {return}
+            
+            
+        }
+        debugPrint("进入前台")
+    }
+    @objc
+    func becomeDeath(noti:Notification){
+        
+        debugPrint("进入后台")
+    }</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>680BEE88-DC32-4680-9166-22A3A13B6C8A</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>swift_notification_background</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>swift_notification_background</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

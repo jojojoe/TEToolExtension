@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>swiftTextInputStringLimit</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>//
+//  SBTextInputVC.swift
+//  StoryBooster
+//
+//  Created by JOJO on 2020/3/23.
+//  Copyright © 2020 Thunder. All rights reserved.
+//
+
+import UIKit
+import SnapKit
+import ZKProgressHUD
+import PopupDialog
+
+class SBTextInputVC: SBBaseViewController {
+
+    var cancelBtn: UIButton = UIButton.init(type: .custom)
+    var doneBtn: UIButton = UIButton.init(type: .custom)
+    var titleLabel: UILabel = UILabel.init(text: "TEXT")
+    var contentTextView: UITextView = UITextView.init()
+    var cancelClickActionBlock: (()-&gt;Void)?
+    var doneClickActionBlock: ((String, Bool)-&gt;Void)?
+    
+    var limitLabel: UILabel = UILabel.init(text: "0/200")
+    
+    let maxLableCount: Int = 200
+    
+    // Public
+    var contentText: String = "" {
+        didSet {
+            updateLimitTextLabel(contentText: contentText)
+//            "Begin writing your story here"
+            let defaultText = "Begin writing your story here"
+            if contentText == defaultText || contentText == "" {
+                contentTextView.text = ""
+                contentTextView.placeholder = defaultText
+            } else {
+                contentTextView.text = contentText
+                contentTextView.placeholder = ""
+                
+            }
+            
+        }
+    }
+    var isAddNew: Bool = false
+    //
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupView()
+        setupTextView()
+        setupTextViewNotification()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.startEdit()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+ 
+        
+    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updatUI()
+    }
+}
+
+extension SBTextInputVC {
+    
+    func updatUI() {
+        cancelBtn.snp.updateConstraints { (ConstraintMaker) in
+            ConstraintMaker.width.equalTo(65)
+            ConstraintMaker.height.equalTo(36)
+            ConstraintMaker.left.equalToSuperview().offset(10)
+            debugPrint("*** self.view.safeArea.top \(self.view.safeArea.top)")
+            ConstraintMaker.top.equalToSuperview().offset(self.view.safeArea.top + 10)
+            
+        }
+         
+    }
+    
+    func setupView() {
+        
+        view.backgroundColor = UIColor.hexString("FCFCFC")
+        view.addSubview(cancelBtn)
+        view.addSubview(doneBtn)
+        view.addSubview(titleLabel)
+        titleLabel.textAlignment = .center
+        
+        cancelBtn.snp.makeConstraints { (ConstraintMaker) in
+            ConstraintMaker.width.equalTo(65)
+            ConstraintMaker.height.equalTo(36)
+            ConstraintMaker.left.equalToSuperview().offset(10)
+            debugPrint("*** self.view.safeArea.top \(self.view.safeArea.top)")
+            ConstraintMaker.top.equalToSuperview().offset(self.view.safeArea.top + 10)
+            
+        }
+        doneBtn.snp.makeConstraints { (ConstraintMaker) in
+            ConstraintMaker.width.equalTo(65)
+            ConstraintMaker.height.equalTo(36)
+            ConstraintMaker.centerY.equalTo(cancelBtn)
+            ConstraintMaker.right.equalToSuperview().offset(-10)
+        }
+        titleLabel.snp.makeConstraints { (ConstraintMaker) in
+            ConstraintMaker.width.equalTo(60)
+            ConstraintMaker.height.equalTo(30)
+            ConstraintMaker.centerY.equalTo(cancelBtn)
+            ConstraintMaker.centerX.equalTo(self.view)
+        }
+        
+        
+        cancelBtn.setTitle("CANCEL", for: .normal)
+        cancelBtn.setTitleColor(UIColor.hexString("343030"), for: .normal)
+        cancelBtn.setBackgroundColor(UIColor.clear, for: .normal)
+        cancelBtn.addTarget(self, action: #selector(cancelBtnClick(btn:)), for: .touchUpInside)
+        doneBtn.setTitle("DONE", for: .normal)
+        doneBtn.setTitleColor(UIColor.white, for: .normal)
+        doneBtn.setBackgroundColor(UIColor.hexString("343030"), for: .normal)
+        doneBtn.layer.cornerRadius = 8
+        doneBtn.layer.masksToBounds = true
+        doneBtn.addTarget(self, action: #selector(doneBtnClick(btn:)), for: .touchUpInside)
+        titleLabel.text = "EDIT"
+        titleLabel.textColor = UIColor.hexString("343030")
+        
+        
+        let font = UIFont.customFont(fileName: "Bebas-Regular.otf", fontPoint: 16)
+        debugPrint("*** font = \(font.fontName)")
+        cancelBtn.titleLabel?.font = UIFont.customFont(fileName: "Bebas-Regular.otf", fontPoint: 16)
+        doneBtn.titleLabel?.font = UIFont.customFont(fileName: "Bebas-Regular.otf", fontPoint: 16)
+        titleLabel.font =  UIFont.customFont(fileName: "Bebas-Regular.otf", fontPoint: 16)
+        debugPrint("*** titleLabel.font = \(titleLabel.font)")
+        
+    }
+    
+    @objc
+    func cancelBtnClick(btn: UIButton) {
+        if contentTextView.text.replacingOccurrences(of: " ", with: "").count &gt; 0 {
+            let message = "Text not saving, sure to go back?".uppercased().localized()
+            
+            let popup = PopupDialog(title: nil,
+                                    message: message,
+                                    buttonAlignment: .horizontal,
+                                    transitionStyle: .zoomIn,
+                                    tapGestureDismissal: true,
+                                    panGestureDismissal: true,
+                                    hideStatusBar: true) {
+                                        debugPrint("Completed")
+            }
+            let popupViewController = popup.viewController as? PopupDialogDefaultViewController
+            popupViewController?.messageFont = UIFont(name: FONT_BEBAS_REGULAR, size: 20)!
+            popupViewController?.messageColor = UIColor(hex: "#BFBFBF")
+            
+            let buttonOne = CancelButton(title: "CANCEL") {
+                
+            }
+            buttonOne.titleFont = UIFont.systemFont(ofSize: 16)
+            buttonOne.titleColor = UIColor(hex: "#343030")
+            
+            let buttonTwo = DestructiveButton(title: "CONFIRM") {[weak self] in
+                guard let `self` = self else { return }
+                self.finishEdit()
+                self.cancelClickActionBlock?()
+            }
+            buttonTwo.titleFont = UIFont.systemFont(ofSize: 16)
+            buttonTwo.titleColor = UIColor(hex: "#E56353")
+            
+            popup.addButtons([buttonOne, buttonTwo])
+            
+            self.present(popup, animated: true, completion: nil)
+        } else {
+            finishEdit()
+            cancelClickActionBlock?()
+        }
+    }
+    
+    @objc
+    func doneBtnClick(btn: UIButton) {
+        
+        if contentTextView.text.replacingOccurrences(of: " ", with: "").count &gt; 0 {
+            finishEdit()
+            doneClickActionBlock?(contentTextView.text, isAddNew)
+        } else {
+            let message = "Please typing your text.".uppercased().localized()
+            
+            let popup = PopupDialog(title: nil,
+                                    message: message,
+                                    buttonAlignment: .horizontal,
+                                    transitionStyle: .zoomIn,
+                                    tapGestureDismissal: true,
+                                    panGestureDismissal: true,
+                                    hideStatusBar: true) {
+                                        debugPrint("Completed")
+            }
+            let popupViewController = popup.viewController as? PopupDialogDefaultViewController
+            popupViewController?.messageFont = UIFont(name: FONT_BEBAS_REGULAR, size: 20)!
+            popupViewController?.messageColor = UIColor(hex: "#BFBFBF")
+            
+            let buttonOne = CancelButton(title: "OK") {
+                
+            }
+            buttonOne.titleFont = UIFont.systemFont(ofSize: 16)
+            buttonOne.titleColor = UIColor(hex: "#343030")
+            
+            popup.addButtons([buttonOne])
+            
+            self.present(popup, animated: true, completion: nil)
+        }
+
+    }
+    
+    func setupTextView() {
+        
+        
+        contentTextView.backgroundColor = .white
+        contentTextView.textColor = UIColor.hexString("343030")
+        contentTextView.font = UIFont.systemFont(ofSize: 16)
+        view.addSubview(contentTextView)
+        contentTextView.delegate = self
+        contentTextView.textAlignment = .left
+        contentTextView.snp.makeConstraints {
+            $0.left.equalTo(cancelBtn)
+            $0.right.equalTo(doneBtn)
+            $0.top.equalTo(cancelBtn.snp.bottom).offset(20)
+            $0.height.equalTo(280)
+        }
+//        contentTextView.text = contentText
+        
+        limitLabel.textAlignment = .right
+        limitLabel.font =  UIFont.customFont(fileName: "Bebas-Regular.otf", fontPoint: 16)
+        view.addSubview(limitLabel)
+        limitLabel.snp.makeConstraints {
+            $0.right.equalTo(contentTextView)
+            $0.top.equalTo(contentTextView.snp.bottom).offset(10)
+            $0.width.equalTo(80)
+            $0.height.equalTo(30)
+        }
+        
+    }
+    
+}
+
+extension SBTextInputVC {
+    func finishEdit() {
+        contentTextView.resignFirstResponder()
+    }
+    
+    func startEdit() {
+        contentTextView.becomeFirstResponder()
+    }
+
+    func updateLimitTextLabel(contentText: String) {
+        
+        limitLabel.text = "\(contentText.count)/\(maxLableCount)"
+        if contentText.count &gt;= maxLableCount {
+            limitLabel.textColor = UIColor.hexString("D4225D")
+            showCountLimitAlert()
+        } else {
+            limitLabel.textColor = UIColor.hexString("343030")
+        }
+    }
+
+}
+ 
+
+extension SBTextInputVC: UITextViewDelegate {
+    
+    func showCountLimitAlert() {
+        if !ZKProgressHUD.isShowing {
+            ZKProgressHUD.showInfo("No more than \(maxLableCount) characters.", maskStyle: nil, onlyOnceFont: nil, autoDismissDelay: 2, completion: nil)
+        }
+        
+    }
+    
+    func setupTextViewNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(textViewNotifitionAction), name: UITextView.textDidChangeNotification, object: nil);
+    }
+    @objc
+    func textViewNotifitionAction(userInfo:NSNotification){
+        guard let textView = userInfo.object as? UITextView else { return }
+        if textView.text.count &gt;= maxLableCount {
+            let selectRange = textView.markedTextRange
+            if let selectRange = selectRange {
+                let position =  textView.position(from: (selectRange.start), offset: 0)
+                if (position != nil) {
+                    // 高亮部分不进行截取，否则中文输入会把高亮区域的拼音强制截取为字母，等高亮取消后再计算字符总数并截取
+                    return
+                }
+
+            }
+            textView.text = String(textView.text[..&lt;String.Index(encodedOffset: maxLableCount)])
+
+            // 对于粘贴文字的case，粘贴结束后若超出字数限制，则让光标移动到末尾处
+            textView.selectedRange = NSRange(location: textView.text.count, length: 0)
+        }
+        
+        contentText = textView.text
+        
+    }
+     
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -&gt; Bool {
+        // range: The range of characters to be replaced.(location、count)
+        // 高亮控制
+        let selectedRange = textView.markedTextRange
+        if let selectedRange = selectedRange {
+            let position =  textView.position(from: (selectedRange.start), offset: 0)
+            if position != nil {
+                let startOffset = textView.offset(from: textView.beginningOfDocument, to: selectedRange.start)
+                let endOffset = textView.offset(from: textView.beginningOfDocument, to: selectedRange.end)
+                let offsetRange = NSMakeRange(startOffset, endOffset - startOffset) // 高亮部分起始位置
+                if offsetRange.location &lt; maxLableCount {
+                    // 高亮部分先不进行字数统计
+                    return true
+                } else {
+                    debugPrint("字数已达上限")
+                    return false
+                }
+            }
+        }
+
+        // 在最末添加
+        if range.location &gt;= maxLableCount {
+            debugPrint("字数已达上限")
+            return false
+        }
+
+        // 在其他位置添加
+        if textView.text.count &gt;= maxLableCount &amp;&amp; range.length &lt;  text.count {
+            debugPrint("字数已达上限")
+            return false
+        }
+
+        return true
+    }
+    
+}
+
+</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>BE5EFB73-C5A6-4520-A93B-0A099F3EE535</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>textInputStringLimit</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>textInputStringLimit</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

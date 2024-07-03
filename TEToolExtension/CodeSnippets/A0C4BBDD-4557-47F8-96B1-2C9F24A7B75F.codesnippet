@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>Label</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>UILabel()
+    .text(&lt;#T##textString: String?##String?#&gt;)
+    .font(&lt;#T##fontSize: CGFloat##CGFloat#&gt;)
+    .textColor(&lt;#T##color: UIColor##UIColor#&gt;)
+    .numberOfLines(&lt;#T##lines: Int##Int#&gt;)
+    .layout(&lt;#T##superV: UIView##UIView#&gt;) { (make) in
+            
+    }</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>A0C4BBDD-4557-47F8-96B1-2C9F24A7B75F</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string></string>
+	<key>IDECodeSnippetTitle</key>
+	<string>swift链式创建Label</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>swift_collection_init</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>var collection: UICollectionView!
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        collection = UICollectionView.init(frame: CGRect.zero, collectionViewLayout: layout)
+        collection.showsVerticalScrollIndicator = false
+        collection.showsHorizontalScrollIndicator = false
+        collection.backgroundColor = .clear
+        collection.delegate = self
+        collection.dataSource = self
+        addSubview(collection)
+        collection.snp.makeConstraints {
+            $0.top.bottom.right.left.equalToSuperview()
+        }
+        collection.register(cellWithClass: &lt;#Cell#&gt;.self)</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>A61C702C-823A-421C-A6FC-D06A508E81DB</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>swift_collection_init</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>swift_collection_init</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string></string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let contentBgV = UIView()
+        var layoutSubsViewOnce = Once()
+        if contentBgV.bounds.size.width == UIScreen.main.bounds.size.width {
+            layoutSubsViewOnce.run {
+                self.stupCanvasV()
+            }
+        }
+    }
+    
+    func stupCanvasV() {
+        var canvasVW: CGFloat = contentBgV.bounds.size.width
+        var canvasVH: CGFloat = contentBgV.bounds.size.height
+        let targetSizeW: CGFloat = canvasVW
+        let targetSizeH: CGFloat = canvasVH
+        
+        if targetSizeW / targetSizeH &gt; canvasVW / canvasVH {
+            canvasVH = canvasVW * (targetSizeH/targetSizeW)
+        } else {
+            canvasVW = canvasVH * (targetSizeW/targetSizeH)
+        }
+        let canvasBgV = UIView()
+        contentBgV.addSubview(canvasBgV)
+        
+    }</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>858AF58E-C858-46F5-A701-7A067A565D01</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>@swift_viewDidLayoutSubviews_canvasView</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>@swift_viewDidLayoutSubviews_canvasView</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

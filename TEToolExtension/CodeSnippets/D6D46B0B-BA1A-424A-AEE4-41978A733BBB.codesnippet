@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>TextField</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>UITextField()
+    .text(&lt;#T##text: String?##String?#&gt;)
+    .textColor(&lt;#T##color: UIColor##UIColor#&gt;)
+    .font(&lt;#T##font: CGFloat##CGFloat#&gt;)
+    .placeholder(&lt;#T##placeholder: String?##String?#&gt;)
+    .addLeftRetractView()
+    .addRightRetractView()
+    .layout(&lt;#T##superV: UIView##UIView#&gt;) { (make) in
+                
+    }</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>D6D46B0B-BA1A-424A-AEE4-41978A733BBB</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string></string>
+	<key>IDECodeSnippetTitle</key>
+	<string>swift链式创建TextField</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>
