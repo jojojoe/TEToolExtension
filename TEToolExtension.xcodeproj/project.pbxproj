@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1A86A832ED3A7EEE122AA8CB /* Pods_TEToolExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F09A892704394139EDED00 /* Pods_TEToolExtension.framework */; };
-		D2D6DCF32C414B5D0072B365 /* ADacNativeAdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D6DCF22C414B5D0072B365 /* ADacNativeAdManager.swift */; };
 		F99BD4A92C20321D00D756E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99BD4A82C20321D00D756E3 /* AppDelegate.swift */; };
 		F99BD4AB2C20321D00D756E3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99BD4AA2C20321D00D756E3 /* SceneDelegate.swift */; };
 		F99BD4AD2C20321D00D756E3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99BD4AC2C20321D00D756E3 /* ViewController.swift */; };
@@ -23,7 +22,6 @@
 		37F09A892704394139EDED00 /* Pods_TEToolExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TEToolExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		44C92AA62A9DCFA6F81B003A /* Pods-TEToolExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TEToolExtension.release.xcconfig"; path = "Target Support Files/Pods-TEToolExtension/Pods-TEToolExtension.release.xcconfig"; sourceTree = "<group>"; };
 		997DA76AB9B338D66C1B89C7 /* Pods-TEToolExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TEToolExtension.debug.xcconfig"; path = "Target Support Files/Pods-TEToolExtension/Pods-TEToolExtension.debug.xcconfig"; sourceTree = "<group>"; };
-		D2D6DCF22C414B5D0072B365 /* ADacNativeAdManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADacNativeAdManager.swift; sourceTree = "<group>"; };
 		F99BD4A52C20321D00D756E3 /* TEToolExtension.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TEToolExtension.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F99BD4A82C20321D00D756E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F99BD4AA2C20321D00D756E3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -103,7 +101,6 @@
 			children = (
 				F99BD4BF2C20384B00D756E3 /* TEToolExtension.swift */,
 				F99BD4C82C20473000D756E3 /* AMPermissionManager.swift */,
-				D2D6DCF22C414B5D0072B365 /* ADacNativeAdManager.swift */,
 			);
 			path = TEToolExtensionResource;
 			sourceTree = "<group>";
@@ -225,7 +222,6 @@
 			files = (
 				F99BD4C12C20384B00D756E3 /* TEToolExtension.swift in Sources */,
 				F99BD4AD2C20321D00D756E3 /* ViewController.swift in Sources */,
-				D2D6DCF32C414B5D0072B365 /* ADacNativeAdManager.swift in Sources */,
 				F99BD4A92C20321D00D756E3 /* AppDelegate.swift in Sources */,
 				F99BD4AB2C20321D00D756E3 /* SceneDelegate.swift in Sources */,
 				F99BD4C92C20473000D756E3 /* AMPermissionManager.swift in Sources */,

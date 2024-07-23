@@ -55,6 +55,13 @@ extension UIScreen {
         }
         return false
     }
+    
+    public static func isDevice8PlusAnd8SEPaid() -> Bool {
+        if Device.current.diagonal == 5.5 || Device.current.diagonal <= 4.7 || Device.current.diagonal >= 7.0 {
+            return true
+        }
+        return false
+    }
 }
 
 public extension UIView {
