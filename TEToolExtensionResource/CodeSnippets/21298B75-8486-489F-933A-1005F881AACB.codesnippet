@@ -3,23 +3,24 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>@swift_dispatch_main_async</string>
+	<string>@shadowcolor</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>DispatchQueue.main.async {
-            
-        }</string>
+	<string>self.contentBackView.layer.shadowColor = [[UIColor colorWithHex:BasicCellLabelShadowColor] colorWithAlphaComponent:0.7].CGColor;
+    self.contentBackView.layer.shadowOffset = CGSizeMake(0, 5);
+    self.contentBackView.layer.shadowRadius = 12;
+    self.contentBackView.layer.shadowOpacity = 0.8;</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>63BCAEBC-FB4D-4A2B-9C00-D6E2A64B3AB1</string>
+	<string>21298B75-8486-489F-933A-1005F881AACB</string>
 	<key>IDECodeSnippetLanguage</key>
-	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
 	<key>IDECodeSnippetSummary</key>
-	<string>@swift_dispatch_main_async</string>
+	<string>@shadowcolor</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>@swift_dispatch_main_async</string>
+	<string>@shadowcolor</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

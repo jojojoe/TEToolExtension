@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>danlimoshi</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>TopLevel</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>+ (PTTextData*)sharedTextDataManager;
+static PTTextData *sharedTextDataManager = nil;
++ (PTTextData*)sharedTextDataManager
+{
+    if (sharedTextDataManager == nil) {
+        sharedTextDataManager = [[PTTextData alloc] init];
+    }
+    return sharedTextDataManager;
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>F6AC9723-3DF0-4E20-AB1D-18DC504123E7</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>单例模式</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>MYCode Singleton </string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

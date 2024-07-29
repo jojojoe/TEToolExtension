@@ -22,6 +22,7 @@
         collection.snp.makeConstraints {
             $0.top.bottom.right.left.equalToSuperview()
         }
+collection.contentInsetAdjustmentBehavior = .never
         collection.register(cellWithClass: &lt;#Cell#&gt;.self)</string>
 	<key>IDECodeSnippetIdentifier</key>
 	<string>A61C702C-823A-421C-A6FC-D06A508E81DB</string>

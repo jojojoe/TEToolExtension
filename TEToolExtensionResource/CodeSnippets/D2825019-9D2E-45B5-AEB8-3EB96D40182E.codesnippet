@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>dispatch_global_async</string>
+	<string>@gcdglobal</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>DispatchQueue.global(qos: .utility).async {
-    
-}</string>
+	<string>dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    &lt;#code#&gt;
+});</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>5D0B64E7-E7E7-40C8-98AF-6E7B8741615D</string>
+	<string>D2825019-9D2E-45B5-AEB8-3EB96D40182E</string>
 	<key>IDECodeSnippetLanguage</key>
-	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
 	<key>IDECodeSnippetSummary</key>
-	<string>dispatch_global_async</string>
+	<string>@gcdglobal</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>@swift_dispatch_global_async</string>
+	<string>@gcdglobal</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

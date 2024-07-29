@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>CreateTextField</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>CodeBlock</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(&lt;#CGFloat x#&gt;, &lt;#CGFloat y#&gt;, &lt;#CGFloat width#&gt;, &lt;#CGFloat height#&gt;)];
+    textField.tag = 200;
+    textField.secureTextEntry = NO;
+    textField.borderStyle = UITextBorderStyleLine;
+    textField.font = [UIFont systemFontOfSize:14];
+    textField.textColor = [UIColor blackColor];
+    NSString *placeholder = @"请输入";
+    textField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:placeholder
+                                                                      attributes:@{NSForegroundColorAttributeName:[UIColor colorWithWhite:0.7 alpha:1],
+                                                                                   NSFontAttributeName:[UIFont systemFontOfSize:14]}];
+    [self.view addSubview:textField];</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>C71A0034-B711-4039-99EF-AA33468FB131</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>CreateTextField</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>
