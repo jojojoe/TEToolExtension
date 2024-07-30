@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>MoyaEnumAPIRequest</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>enum API {
+    case api1
+}
+
+extension API: SugarTargetType {
+    var baseURL: URL {
+        
+        switch self {
+        case .api1:
+            return URL(string: "https://")!
+        default:
+            return URL(string: "https://")!
+        }
+    }
+    
+    var route: Route {
+        switch self {
+        case .api1:
+            return .post("")
+        default:
+            return .get("")
+        }
+        
+    }
+    
+    var task: Task {
+        switch self {
+        case .api1:
+            return .requestPlain
+        default:
+            return .requestPlain
+        }
+    }
+   
+    var parameters: Parameters? {
+        switch self {
+        case .api1:
+            return JSONEncoding() =&gt; ["": ""]
+        default:
+            return JSONEncoding() =&gt; ["": ""]
+        }
+    }
+    
+    var headers: [String: String]? {
+        var headersDict: [String: String] = [:]
+        headersDict = ["Content-Type" : "application/json"]
+        
+        switch self {
+        case .api1:
+            return headersDict
+        default:
+            return headersDict
+        }
+    }
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>29C7C85F-99AC-49ED-B2D2-2D2BB10D8687</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>MoyaEnumAPIRequest</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>@swift_MoyaEnumAPIRequest</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>0</integer>
+</dict>
+</plist>

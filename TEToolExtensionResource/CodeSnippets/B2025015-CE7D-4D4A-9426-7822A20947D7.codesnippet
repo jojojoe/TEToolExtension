@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string></string>
+	<string>@pod_install_deployment_target_13.0</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>All</string>
@@ -23,9 +23,9 @@ end</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Ruby</string>
 	<key>IDECodeSnippetSummary</key>
-	<string>post_install_deployment_target_13.0</string>
+	<string>@pod_install_deployment_target_13.0</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>post_install_deployment_target_13.0</string>
+	<string>@pod_install_deployment_target_13.0</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

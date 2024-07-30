@@ -26,7 +26,7 @@
 	<key>IDECodeSnippetSummary</key>
 	<string>initframe</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>initframe</string>
+	<string>@swift_viewInitFrame</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>
