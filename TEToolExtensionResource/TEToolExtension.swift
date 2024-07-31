@@ -796,6 +796,12 @@ extension Double {
     
 }
 
+extension Float {
+   var bytes: [UInt8] {
+       withUnsafeBytes(of: self, Array.init)
+   }
+}
+
 extension Date {
     func unixTimestampString() -> String {
         let timestamp = self.unixTimestamp
