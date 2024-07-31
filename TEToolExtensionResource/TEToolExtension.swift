@@ -27,6 +27,36 @@ extension UIFont {
     
 }
 
+extension UIImage {
+    func resizeAndCropImage(targetSize: CGSize) -> UIImage {
+        let originalWidth = self.size.width
+        let originalHeight = self.size.height
+        let targetWidth = targetSize.width
+        let targetHeight = targetSize.height
+
+        // 1. 计算缩放比例
+        let scale = min(targetWidth / originalWidth, targetHeight / originalHeight)
+
+        // 2. 计算新的图片尺寸
+        let newWidth = originalWidth * scale
+        let newHeight = originalHeight * scale
+
+        // 3. 创建新的图像上下文
+        UIGraphicsBeginImageContextWithOptions(targetSize, false, 1.0)
+
+        // 4. 绘制缩放后的图片到新的图像上下文
+        self.draw(in: CGRect(x: (targetWidth - newWidth) / 2, y: (targetHeight - newHeight) / 2, width: newWidth, height: newHeight))
+
+        // 5. 从图像上下文中获取新的图片
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+
+        // 6. 关闭图像上下文
+        UIGraphicsEndImageContext()
+
+        return resizedImage ?? self // 返回裁剪后的图片或原始图片
+    }
+}
+
 extension UIScreen {
     
     public static func width() -> CGFloat {
