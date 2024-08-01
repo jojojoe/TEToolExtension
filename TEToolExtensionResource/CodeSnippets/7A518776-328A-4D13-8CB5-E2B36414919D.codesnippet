@@ -9,7 +9,7 @@
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>class &lt;#ITGuideCotentCell#&gt;: UICollectionViewCell {
+	<string>class &lt;#Cell#&gt;: UICollectionViewCell {
     let contentImgV = UIImageView()
     
     override init(frame: CGRect) {
