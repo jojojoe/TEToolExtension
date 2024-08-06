@@ -230,6 +230,12 @@ extension UILabel {
     }
 
     @discardableResult
+    public func color(_ hexValue: String) -> Self {
+        textColor = UIColor(hexString: hexValue)
+        return self
+    }
+    
+    @discardableResult
     public func font(_ name: String, _ value: CGFloat) -> Self {
         font = UIFont(name: name, size: value) ?? UIFont.systemFont(ofSize: value)
         return self
