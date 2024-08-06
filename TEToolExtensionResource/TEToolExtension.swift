@@ -848,6 +848,26 @@ extension String {
 }
 
 
+extension String {
+    func customAttriString(font: UIFont, textColor: UIColor, lineSpacing: CGFloat = 4, _ alig: NSTextAlignment = .left) -> NSMutableAttributedString {
+        // 创建NSMutableAttributedString
+        let attributedString = NSMutableAttributedString(string: self)
+        // 设置行间距
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 4 // 这里设置行间距为10点
+        paragraphStyle.alignment = alig
+        // 应用属性到文本
+        let range = NSRange(location: 0, length: attributedString.length)
+        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
+        attributedString.addAttribute(.font, value: font, range: range)
+        attributedString.addAttribute(.foregroundColor, value: textColor, range: range)
+        
+        // 设置UILabel的属性文本
+        return attributedString
+    }
+}
+
+
 class GLLinkLabel: UIView, UITextViewDelegate {
 
     var contentText: String
