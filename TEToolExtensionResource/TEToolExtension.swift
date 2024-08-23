@@ -8,12 +8,15 @@
 
 import Foundation
 import UIKit
+import Hero
 import SnapKit
 import SwifterSwift
 import DeviceKit
 import CommonCrypto
-///Users/zh/Library/Developer/Xcode/UserData/CodeSnippets
-// Users/zh/Library/Developer/Xcode/UserData/CodeSnippets
+import CoreImage
+
+/// Users/zh/Library/Developer/Xcode/UserData/CodeSnippets
+
 
 //MARK: UIKit
 extension UIFont {
@@ -27,35 +30,7 @@ extension UIFont {
     
 }
 
-extension UIImage {
-    func resizeAndCropImage(targetSize: CGSize) -> UIImage {
-        let originalWidth = self.size.width
-        let originalHeight = self.size.height
-        let targetWidth = targetSize.width
-        let targetHeight = targetSize.height
 
-        // 1. 计算缩放比例
-        let scale = min(targetWidth / originalWidth, targetHeight / originalHeight)
-
-        // 2. 计算新的图片尺寸
-        let newWidth = originalWidth * scale
-        let newHeight = originalHeight * scale
-
-        // 3. 创建新的图像上下文
-        UIGraphicsBeginImageContextWithOptions(targetSize, false, 1.0)
-
-        // 4. 绘制缩放后的图片到新的图像上下文
-        self.draw(in: CGRect(x: (targetWidth - newWidth) / 2, y: (targetHeight - newHeight) / 2, width: newWidth, height: newHeight))
-
-        // 5. 从图像上下文中获取新的图片
-        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
-
-        // 6. 关闭图像上下文
-        UIGraphicsEndImageContext()
-
-        return resizedImage ?? self // 返回裁剪后的图片或原始图片
-    }
-}
 
 extension UIScreen {
     
@@ -147,7 +122,14 @@ public extension UIView {
         layer.masksToBounds = masksToBounds
         return self
     }
-
+    
+    @discardableResult
+    public func isUserInteractionEnabled(_ value: Bool) -> Self {
+        isUserInteractionEnabled = value
+        return self
+    }
+    
+    
     @discardableResult
     public func borderColor(_ value: UIColor, width: CGFloat = 1) -> Self {
         layer.borderColor = value.cgColor
@@ -184,6 +166,19 @@ public extension UIView {
         backgroundColor = value
         return self
     }
+    
+    @discardableResult
+    public func backgroundColor(_ hexvalue: String) -> Self {
+        backgroundColor = UIColor(hexString: hexvalue) ?? .white
+        return self
+    }
+    
+    @discardableResult
+    public func alpha(_ value: CGFloat) -> Self {
+        alpha = value
+        return self
+    }
+    
 }
 
 
@@ -222,16 +217,37 @@ extension UILabel {
         text = value
         return self
     }
-
+    
+    @discardableResult
+    public func attributedText(_ value: NSMutableAttributedString?) -> Self {
+        attributedText = value
+        return self
+    }
+    
+    
     @discardableResult
     public func color(_ value: UIColor) -> Self {
         textColor = value
         return self
     }
-
+    
     @discardableResult
     public func color(_ hexValue: String) -> Self {
         textColor = UIColor(hexString: hexValue)
+        return self
+    }
+
+    
+    @discardableResult
+    public func highlightedTextColor(_ value: UIColor) -> Self {
+        highlightedTextColor = value
+        return self
+    }
+    
+    
+    @discardableResult
+    public func highlightedTextColor(_ hexValue: String) -> Self {
+        highlightedTextColor = UIColor(hexString: hexValue)
         return self
     }
     
@@ -279,6 +295,12 @@ extension UIButton {
     @discardableResult
     public func titleColor(_ value: UIColor, _ state: UIControl.State = .normal) -> Self {
         setTitleColor(value, for: state)
+        return self
+    }
+    
+    @discardableResult
+    public func titleColor(_ hexvalue: String, _ state: UIControl.State = .normal) -> Self {
+        setTitleColor(UIColor(hexString: hexvalue) ?? .white, for: state)
         return self
     }
 
@@ -407,6 +429,49 @@ public extension UITextField {
         placeholder = t
         return self
     }
+    
+    @discardableResult
+    public func text(_ value: String?) -> Self {
+        text = value
+        return self
+    }
+
+    @discardableResult
+    public func color(_ value: UIColor) -> Self {
+        textColor = value
+        return self
+    }
+    
+    @discardableResult
+    public func color(_ hexValue: String) -> Self {
+        textColor = UIColor(hexString: hexValue)
+        return self
+    }
+
+    @discardableResult
+    public func font(_ name: String, _ value: CGFloat) -> Self {
+        font = UIFont(name: name, size: value) ?? UIFont.systemFont(ofSize: value)
+        return self
+    }
+    
+    @discardableResult
+    public func textAlignment(_ value: NSTextAlignment) -> Self {
+        textAlignment = value
+        return self
+    }
+    
+    @discardableResult
+    public func delegate(_ value: Any) -> Self {
+        delegate = value as! any UITextFieldDelegate
+        return self
+    }
+    
+    @discardableResult
+    public func returnKeyType(_ value: UIReturnKeyType) -> Self {
+        returnKeyType = value
+        return self
+    }
+    
 }
 
 extension UIButton {
@@ -460,7 +525,57 @@ extension UIButton {
 }
 
 extension UITextView {
+ 
+    
+    @discardableResult
+    public func text(_ value: String?) -> Self {
+        text = value
+        return self
+    }
 
+    @discardableResult
+    public func color(_ value: UIColor) -> Self {
+        textColor = value
+        return self
+    }
+    
+    @discardableResult
+    public func color(_ hexValue: String) -> Self {
+        textColor = UIColor(hexString: hexValue)
+        return self
+    }
+
+    @discardableResult
+    public func font(_ name: String, _ value: CGFloat) -> Self {
+        font = UIFont(name: name, size: value) ?? UIFont.systemFont(ofSize: value)
+        return self
+    }
+    
+    @discardableResult
+    public func textAlignment(_ value: NSTextAlignment) -> Self {
+        textAlignment = value
+        return self
+    }
+    
+    @discardableResult
+    public func delegate(_ value: Any) -> Self {
+        delegate = value as! any UITextViewDelegate
+        return self
+    }
+    
+    @discardableResult
+    public func returnKeyType(_ value: UIReturnKeyType) -> Self {
+        returnKeyType = value
+        return self
+    }
+    
+    @discardableResult
+    public func placeholder(_ value: String) -> Self {
+        placeholder = value
+        return self
+    }
+    
+    //
     /// Resize the placeholder when the UITextView bounds change
     override open var bounds: CGRect {
         didSet {
@@ -523,7 +638,7 @@ extension UITextView {
 //        self.resizePlaceholder()
         
         let labelX = self.textContainerInset.left + textContainer.lineFragmentPadding + 2
-        let labelY = self.textContainerInset.top + 2
+        let labelY = self.textContainerInset.top + 0.5
         placeholderLabel.snp.makeConstraints {
             $0.left.equalToSuperview().offset(labelX)
             $0.top.equalToSuperview().offset(labelY)
@@ -539,7 +654,10 @@ extension UITextView {
     
     @objc
     func textViewNotifitionAction(userInfo:NSNotification){
-        
+        checkPlachholderShowStatus()
+    }
+    
+    func checkPlachholderShowStatus() {
         if let placeholderLabel = self.viewWithTag(100) as? UILabel {
             placeholderLabel.isHidden = !self.text.isEmpty
         }
@@ -547,8 +665,403 @@ extension UITextView {
 }
 
 
+extension UIView {
+    /// 设置渐变颜色背景
+    /// - Parameters:
+    ///   - colors: 渐变颜色数组
+    ///   - locations: 颜色位置数组，可选，默认为nil
+    ///   - startPoint: 渐变开始点
+    ///   - endPoint: 渐变结束点
+    public func applyGradient(colors: [UIColor], locations: [NSNumber]? = nil, startPoint: CGPoint = CGPoint(x: 0.5, y: 0.0), endPoint: CGPoint = CGPoint(x: 0.5, y: 1.0)) {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = colors.map { $0.cgColor }
+        gradientLayer.locations = locations
+        gradientLayer.startPoint = startPoint
+        gradientLayer.endPoint = endPoint
+        gradientLayer.frame = self.bounds
+        
+        // 检查是否已经有渐变层，如果有则替换，否则添加
+        if let gradient = self.layer.sublayers?.first(where: { $0 is CAGradientLayer }) as? CAGradientLayer {
+            gradient.colors = colors.map { $0.cgColor }
+            gradient.locations = locations
+            gradient.startPoint = startPoint
+            gradient.endPoint = endPoint
+        } else {
+            self.layer.insertSublayer(gradientLayer, at: 0)
+        }
+    }
+}
+
+extension UIImage {
+    /// Fix image orientaton to protrait up
+    func fixedOrientation() -> UIImage? {
+        guard imageOrientation != UIImage.Orientation.up else {
+            // This is default orientation, don't need to do anything
+            return self.copy() as? UIImage
+        }
+
+        guard let cgImage = self.cgImage else {
+            // CGImage is not available
+            return nil
+        }
+
+        guard let colorSpace = cgImage.colorSpace, let ctx = CGContext(data: nil, width: Int(size.width), height: Int(size.height), bitsPerComponent: cgImage.bitsPerComponent, bytesPerRow: 0, space: colorSpace, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else {
+            return nil // Not able to create CGContext
+        }
+
+        var transform: CGAffineTransform = CGAffineTransform.identity
+
+        switch imageOrientation {
+        case .down, .downMirrored:
+            transform = transform.translatedBy(x: size.width, y: size.height)
+            transform = transform.rotated(by: CGFloat.pi)
+        case .left, .leftMirrored:
+            transform = transform.translatedBy(x: size.width, y: 0)
+            transform = transform.rotated(by: CGFloat.pi / 2.0)
+        case .right, .rightMirrored:
+            transform = transform.translatedBy(x: 0, y: size.height)
+            transform = transform.rotated(by: CGFloat.pi / -2.0)
+        case .up, .upMirrored:
+            break
+        @unknown default:
+            fatalError("Missing...")
+            break
+        }
+
+        // Flip image one more time if needed to, this is to prevent flipped image
+        switch imageOrientation {
+        case .upMirrored, .downMirrored:
+            transform = transform.translatedBy(x: size.width, y: 0)
+            transform = transform.scaledBy(x: -1, y: 1)
+        case .leftMirrored, .rightMirrored:
+            transform = transform.translatedBy(x: size.height, y: 0)
+            transform = transform.scaledBy(x: -1, y: 1)
+        case .up, .down, .left, .right:
+            break
+        @unknown default:
+            fatalError("Missing...")
+            break
+        }
+
+        ctx.concatenate(transform)
+
+        switch imageOrientation {
+        case .left, .leftMirrored, .right, .rightMirrored:
+            ctx.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.height, height: size.width))
+        default:
+            ctx.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+            break
+        }
+
+        guard let newCGImage = ctx.makeImage() else { return nil }
+        return UIImage.init(cgImage: newCGImage, scale: 1, orientation: .up)
+    }
+    
+}
+
+extension UIImage {
+    func resizeAndCropImage(targetSize: CGSize, contentAlignment: NSTextAlignment = .center) -> UIImage {
+        // c = center  l = leading t = trailing
+        let originalWidth = self.size.width
+        let originalHeight = self.size.height
+        let targetWidth = targetSize.width
+        let targetHeight = targetSize.height
+
+        // 1. 计算缩放比例
+        let scale = max(targetWidth / originalWidth, targetHeight / originalHeight)
+
+        // 2. 计算新的图片尺寸
+        let newWidth = originalWidth * scale
+        let newHeight = originalHeight * scale
+
+        // 3. 创建新的图像上下文
+        UIGraphicsBeginImageContextWithOptions(targetSize, false, UIScreen.mainScreenScale)
+
+        // 4. 绘制缩放后的图片到新的图像上下文
+        var xoffset: CGFloat = 0
+        var yoffset: CGFloat = 0
+        if contentAlignment == .center {
+            xoffset = (targetWidth - newWidth) / 2
+            yoffset = (targetHeight - newHeight) / 2
+        } else if contentAlignment == .left {
+            xoffset = 0
+            yoffset = 0
+        } else if contentAlignment == .right {
+            xoffset = (targetWidth - newWidth)
+            yoffset = (targetHeight - newHeight)
+        }
+        self.draw(in: CGRect(x: xoffset, y: yoffset, width: newWidth, height: newHeight))
+
+        // 5. 从图像上下文中获取新的图片
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+
+        // 6. 关闭图像上下文
+        UIGraphicsEndImageContext()
+
+        return resizedImage ?? self // 返回裁剪后的图片或原始图片
+    }
+}
+
+extension UIImage {
+    // 图片边缘也会被模糊
+    func applyGaussianBlur(withBlurLevel blur: Double) -> UIImage? {
+        // 创建CIImage
+        guard let ciInputImage = CIImage(image: self) else { return nil }
+
+        // 创建高斯模糊核心图像滤镜
+        guard let blurFilter = CIFilter(name: "CIGaussianBlur") else { return nil }
+        
+        // 设置滤镜的输入图像
+        blurFilter.setValue(ciInputImage, forKey: kCIInputImageKey)
+        
+        // 设置模糊半径
+        blurFilter.setValue(blur, forKey: kCIInputRadiusKey)
+        
+        // 获取滤镜输出图像
+        guard let outputImage = blurFilter.outputImage else { return nil }
+        
+        // 创建一个CIContext
+        let context = CIContext(options: nil)
+        
+        // 将CIImage转换为CGImage
+        guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else { return nil }
+        
+        // 将CGImage转换为UIImage
+        let blurredImage = UIImage(cgImage: cgImage)
+        
+        return blurredImage
+    }
+    
+    // 图片边缘 不会被模糊
+    func gaussianBlur(radius: CGFloat) -> UIImage? {
+        // 1. 将 UIImage 转换为 CIImage
+        guard let ciImage = CIImage(image: self) else { return nil }
+
+        // 2. 使用 CIAffineClamp 滤镜对 CIImage 进行扩展
+        let affineClampFilter = CIFilter(name: "CIAffineClamp")!
+        affineClampFilter.setValue(ciImage, forKey: kCIInputImageKey)
+        guard let clampedImage = affineClampFilter.outputImage else { return nil }
+
+        // 3. 使用 CIGaussianBlur 滤镜对扩展后的 CIImage 进行高斯模糊
+        let gaussianBlurFilter = CIFilter(name: "CIGaussianBlur")!
+        gaussianBlurFilter.setValue(clampedImage, forKey: kCIInputImageKey)
+        gaussianBlurFilter.setValue(radius, forKey: kCIInputRadiusKey)
+        guard let blurredImage = gaussianBlurFilter.outputImage else { return nil }
+
+        // 4. 将模糊后的 CIImage 转换为 UIImage
+        let ciContext = CIContext()
+        guard let cgImage = ciContext.createCGImage(blurredImage, from: ciImage.extent) else { return nil }
+        return UIImage(cgImage: cgImage)
+    }
+
+}
+
+public extension UIView {
+    
+    struct CustomLoadingViewConstants {
+        static let Tag = 10001
+    }
+
+    func customShowLoading(loadingImgName: String, sizeWidth: CGFloat, duration: Double = 1) {
+
+        if self.viewWithTag(CustomLoadingViewConstants.Tag) != nil {
+            // If loading view is already found in current view hierachy, do nothing
+            return
+        }
+        
+        let loadingImgV = UIImageView(image: UIImage(named: loadingImgName))
+        loadingImgV.bounds = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: sizeWidth, height: sizeWidth))
+        loadingImgV.center = CGPoint(x: self.bounds.size.width / 2, y: self.bounds.size.height / 2)
+        self.addSubview(loadingImgV)
+        //
+        let animation = CABasicAnimation()
+        animation.keyPath = "transform.rotation.z"
+        animation.fromValue = degreesToRadians(degrees: 0)
+        animation.toValue = degreesToRadians(degrees: 360)
+        animation.duration = duration
+        animation.repeatCount = HUGE
+        //
+        loadingImgV.layer.add(animation, forKey: "")
+        loadingImgV.tag = CustomLoadingViewConstants.Tag
+        
+        loadingImgV.alpha = 1
+         
+    }
+
+    func customHideLoading() {
+
+        if let indicatorView = self.viewWithTag(CustomLoadingViewConstants.Tag) {
+            indicatorView.alpha = 1
+            UIView.animate(withDuration: 0.3) {
+                indicatorView.alpha = 0
+                indicatorView.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
+            } completion: { completed in
+                indicatorView.removeFromSuperview()
+            }
+
+             
+        }
+    }
+    func degreesToRadians(degrees: CGFloat) -> CGFloat {
+        return degrees * CGFloat(CGFloat.pi / 180)
+    }
+}
+
+
+extension UIViewController {
+    struct AlertItem {
+        let btnName: String
+        var handler: ((UIAlertAction) -> Void)? = nil
+    }
+    func showAlert(title: String, message: String, btnActions: [AlertItem]) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        if btnActions.count == 1 {
+            let item = btnActions[0]
+            let button = UIAlertAction(title: item.btnName, style: .cancel, handler: item.handler)
+            alert.addAction(button)
+        } else if btnActions.count == 2 {
+            let item1 = btnActions[0]
+            let button1 = UIAlertAction(title: item1.btnName, style: .cancel, handler: item1.handler)
+            alert.addAction(button1)
+            //
+            let item2 = btnActions[1]
+            let button2 = UIAlertAction(title: item2.btnName, style: .default, handler: item2.handler)
+            alert.addAction(button2)
+        }
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func showFrom(leaderVC: UIViewController, animaType: HeroDefaultAnimationType, isAnimation: Bool = true) {
+        self.isHeroEnabled = true
+        leaderVC.navigationController?.isHeroEnabled = true
+        leaderVC.navigationController?.heroNavigationAnimationType = animaType
+        leaderVC.navigationController?.pushViewController(self, animated: isAnimation)
+    }
+    
+    func popVC(animaType: HeroDefaultAnimationType) {
+        self.navigationController?.heroNavigationAnimationType = animaType
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+}
+
+
+class GLLinkLabel: UIView, UITextViewDelegate {
+
+    var contentText: String
+    let textV = UITextView()
+    
+    init(frame: CGRect, contentText: String, font: UIFont, alignment: NSTextAlignment = .left, textColor: UIColor, linkColor: UIColor) {
+        self.contentText = contentText
+        super.init(frame: frame)
+        self.backgroundColor(.clear)
+        let para = NSMutableParagraphStyle()
+        para.alignment = alignment
+        let attributedText = NSMutableAttributedString(string: contentText, attributes: [.foregroundColor : textColor, .font : font, .paragraphStyle : para])
+        textV.backgroundColor(.clear)
+        textV.attributedText = attributedText
+        textV.delegate = self
+        textV.isEditable = false
+        textV.linkTextAttributes = [.foregroundColor : linkColor]
+        textV.adhere(toSuperview: self) {
+            $0.edges.equalToSuperview()
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func addLink(linkName: String, linkStr: String, hasUndleLine: Bool = true) {
+        
+        if let range = contentText.range(of: linkName, options: .caseInsensitive) {
+            let nsRange = NSRange(range, in: contentText)
+            let attribute = NSMutableAttributedString(attributedString: textV.attributedText)
+            attribute.addAttribute(.link, value: linkStr, range: nsRange)
+            if hasUndleLine {
+                attribute.addAttributes([.underlineStyle : 1], range: nsRange)
+            }
+            textV.attributedText = attribute
+        }
+    }
+    
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        debugPrint("shouldInteractWith - \(URL)")
+        
+        return true
+    }
+    
+}
+
+extension NSObject {
+    func goSystemSetting() {
+        let url = URL(string: UIApplication.openSettingsURLString)!
+        UIApplication.shared.open(url, options: [:])
+    }
+}
+
+extension Array {
+
+    func item(before index: Int) -> Element? {
+        if index < 1 {
+            return nil
+        }
+
+        if index > count {
+            return nil
+        }
+
+        return self[index - 1]
+    }
+
+    func item(after index: Int) -> Element? {
+        if index < -1 {
+            return nil
+        }
+
+        if index <= count - 2 {
+            return self[index + 1]
+        }
+
+        return nil
+    }
+}
+
+class DelayedTaskManager {
+    private var task: DispatchWorkItem?
+    private var delayInSeconds: Double
+
+    init(delayInSeconds: Double, performTask: @escaping () -> Void) {
+        self.delayInSeconds = delayInSeconds
+        // 创建一个 DispatchWorkItem 来包装任务
+        task = DispatchWorkItem(block: performTask)
+
+        // 在指定的延时时间后执行任务
+        DispatchQueue.main.asyncAfter(deadline: .now() + delayInSeconds) { [weak self] in
+            self?.task?.perform()
+        }
+    }
+
+    
+    func cancelTask() {
+        // 取消已经安排的任务
+        task?.cancel()
+        task = nil
+    }
+}
 
 //MARK: Foundation
+
+extension String {
+    func pushNotification() {
+        NotificationCenter.default.post(
+            name: NSNotification.Name(rawValue: self),
+            object: nil,
+            userInfo: nil)
+    }
+}
 
 extension String {
     func hmac(by algorithm: Algorithm, key: [UInt8]) -> [UInt8] {
@@ -657,113 +1170,6 @@ public class Once {
     }
 }
 
-extension UIView {
-    /// 设置渐变颜色背景
-    /// - Parameters:
-    ///   - colors: 渐变颜色数组
-    ///   - locations: 颜色位置数组，可选，默认为nil
-    ///   - startPoint: 渐变开始点
-    ///   - endPoint: 渐变结束点
-    public func applyGradient(colors: [UIColor], locations: [NSNumber]? = nil, startPoint: CGPoint = CGPoint(x: 0.5, y: 0.0), endPoint: CGPoint = CGPoint(x: 0.5, y: 1.0)) {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = colors.map { $0.cgColor }
-        gradientLayer.locations = locations
-        gradientLayer.startPoint = startPoint
-        gradientLayer.endPoint = endPoint
-        gradientLayer.frame = self.bounds
-        
-        // 检查是否已经有渐变层，如果有则替换，否则添加
-        if let gradient = self.layer.sublayers?.first(where: { $0 is CAGradientLayer }) as? CAGradientLayer {
-            gradient.colors = colors.map { $0.cgColor }
-            gradient.locations = locations
-            gradient.startPoint = startPoint
-            gradient.endPoint = endPoint
-        } else {
-            self.layer.insertSublayer(gradientLayer, at: 0)
-        }
-    }
-}
-
- 
-
-public extension UIView {
-    
-    struct CustomLoadingViewConstants {
-        static let Tag = 10001
-    }
-
-    func customShowLoading(loadingImgName: String, sizeWidth: CGFloat, duration: Double = 1) {
-
-        if self.viewWithTag(CustomLoadingViewConstants.Tag) != nil {
-            // If loading view is already found in current view hierachy, do nothing
-            return
-        }
-        
-        let loadingImgV = UIImageView(image: UIImage(named: loadingImgName))
-        loadingImgV.bounds = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: sizeWidth, height: sizeWidth))
-        loadingImgV.center = CGPoint(x: self.bounds.size.width / 2, y: self.bounds.size.height / 2)
-        self.addSubview(loadingImgV)
-        //
-        let animation = CABasicAnimation()
-        animation.keyPath = "transform.rotation.z"
-        animation.fromValue = degreesToRadians(degrees: 0)
-        animation.toValue = degreesToRadians(degrees: 360)
-        animation.duration = duration
-        animation.repeatCount = HUGE
-        //
-        loadingImgV.layer.add(animation, forKey: "")
-        loadingImgV.tag = CustomLoadingViewConstants.Tag
-        
-        loadingImgV.alpha = 1
-         
-    }
-
-    func customHideLoading() {
-
-        if let indicatorView = self.viewWithTag(CustomLoadingViewConstants.Tag) {
-            indicatorView.alpha = 1
-            UIView.animate(withDuration: 0.3) {
-                indicatorView.alpha = 0
-                indicatorView.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
-            } completion: { completed in
-                indicatorView.removeFromSuperview()
-            }
-
-             
-        }
-    }
-    func degreesToRadians(degrees: CGFloat) -> CGFloat {
-        return degrees * CGFloat(CGFloat.pi / 180)
-    }
-}
-
-
-extension UIViewController {
-    struct AlertItem {
-        let btnName: String
-        var handler: ((UIAlertAction) -> Void)? = nil
-    }
-    func showAlert(title: String, message: String, btnActions: [AlertItem]) {
-        
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        if btnActions.count == 1 {
-            let item = btnActions[0]
-            let button = UIAlertAction(title: item.btnName, style: .cancel, handler: item.handler)
-            alert.addAction(button)
-        } else if btnActions.count == 2 {
-            let item1 = btnActions[0]
-            let button1 = UIAlertAction(title: item1.btnName, style: .cancel, handler: item1.handler)
-            alert.addAction(button1)
-            //
-            let item2 = btnActions[1]
-            let button2 = UIAlertAction(title: item2.btnName, style: .default, handler: item2.handler)
-            alert.addAction(button2)
-        }
-        
-        self.present(alert, animated: true, completion: nil)
-    }
-}
-
 extension Double {
     func rounded(digits: Int) -> Double {
         let multiplier = pow(10.0, Double(digits))
@@ -853,7 +1259,6 @@ extension String {
     }
 }
 
-
 extension String {
     func customAttriString(font: UIFont, textColor: UIColor, lineSpacing: CGFloat = 4, _ alig: NSTextAlignment = .left) -> NSMutableAttributedString {
         // 创建NSMutableAttributedString
@@ -873,51 +1278,62 @@ extension String {
     }
 }
 
+extension UIBezierPath {
 
-class GLLinkLabel: UIView, UITextViewDelegate {
+    public convenience init(roundedRect rect: CGRect,
+                            topLeftRadius: CGFloat?,
+                            topRightRadius: CGFloat?,
+                            bottomLeftRadius: CGFloat?,
+                            bottomRightRadius: CGFloat?) {
+        self.init()
 
-    var contentText: String
-    let textV = UITextView()
-    
-    init(frame: CGRect, contentText: String, font: UIFont, alignment: NSTextAlignment = .left, textColor: UIColor, linkColor: UIColor) {
-        self.contentText = contentText
-        super.init(frame: frame)
-        self.backgroundColor(.clear)
-        let para = NSMutableParagraphStyle()
-        para.alignment = alignment
-        let attributedText = NSMutableAttributedString(string: contentText, attributes: [.foregroundColor : textColor, .font : font, .paragraphStyle : para])
-        textV.backgroundColor(.clear)
-        textV.attributedText = attributedText
-        textV.delegate = self
-        textV.isEditable = false
-        textV.linkTextAttributes = [.foregroundColor : linkColor]
-        textV.adhere(toSuperview: self) {
-            $0.edges.equalToSuperview()
-        }
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func addLink(linkName: String, linkStr: String, hasUndleLine: Bool = true) {
-        
-        if let range = contentText.range(of: linkName, options: .caseInsensitive) {
-            let nsRange = NSRange(range, in: contentText)
-            let attribute = NSMutableAttributedString(attributedString: textV.attributedText)
-            attribute.addAttribute(.link, value: linkStr, range: nsRange)
-            if hasUndleLine {
-                attribute.addAttributes([.underlineStyle : 1], range: nsRange)
+        if (((bottomLeftRadius ?? 0) + (bottomRightRadius ?? 0)) <= rect.size.width) && (((topLeftRadius ?? 0) + (topRightRadius ?? 0)) <= rect.size.width) && (((topLeftRadius ?? 0) + (bottomLeftRadius ?? 0)) <= rect.size.height) && (((topRightRadius ?? 0) + (bottomRightRadius ?? 0)) <= rect.size.height) {
+            
+            // corner centers
+            let tl = CGPoint(x: rect.minX + (topLeftRadius ?? 0), y: rect.minY + (topLeftRadius ?? 0))
+            let tr = CGPoint(x: rect.maxX - (topRightRadius ?? 0), y: rect.minY + (topRightRadius ?? 0))
+            let bl = CGPoint(x: rect.minX + (bottomLeftRadius ?? 0), y: rect.maxY - (bottomLeftRadius ?? 0))
+            let br = CGPoint(x: rect.maxX - (bottomRightRadius ?? 0), y: rect.maxY - (bottomRightRadius ?? 0))
+
+            let topMidpoint = CGPoint(x: rect.midX, y: rect.minY)
+
+            do {
+                self.move(to: topMidpoint)
+
+                if let topRightRadius = topRightRadius {
+                    self.addLine(to: CGPoint(x: rect.maxX - topRightRadius, y: rect.minY))
+                    self.addArc(withCenter: tr, radius: topRightRadius, startAngle: -CGFloat.pi * 0.5, endAngle: 0, clockwise: true)
+                } else {
+                    self.addLine(to: tr)
+                }
+
+                if let bottomRightRadius = bottomRightRadius {
+                    self.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY - bottomRightRadius))
+                    self.addArc(withCenter: br, radius: bottomRightRadius, startAngle: 0, endAngle: CGFloat.pi * 0.5, clockwise: true)
+                } else {
+                    self.addLine(to: br)
+                }
+
+                if let bottomLeftRadius = bottomLeftRadius {
+                    self.addLine(to: CGPoint(x: rect.minX + bottomLeftRadius, y: rect.maxY))
+                    self.addArc(withCenter: bl, radius: bottomLeftRadius, startAngle: CGFloat.pi * 0.5, endAngle: CGFloat.pi, clockwise: true)
+                } else {
+                    self.addLine(to: bl)
+                }
+
+                if let topLeftRadius = topLeftRadius {
+                    self.addLine(to: CGPoint(x: rect.minX, y: rect.minY + topLeftRadius))
+                    self.addArc(withCenter: tl, radius: topLeftRadius, startAngle: CGFloat.pi, endAngle: -CGFloat.pi * 0.5, clockwise: true)
+                } else {
+                    self.addLine(to: tl)
+                }
+
+                self.close()
             }
-            textV.attributedText = attribute
         }
+         
+
     }
-    
-    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        debugPrint("shouldInteractWith - \(URL)")
-        
-        return true
-    }
-    
 }
  
+
