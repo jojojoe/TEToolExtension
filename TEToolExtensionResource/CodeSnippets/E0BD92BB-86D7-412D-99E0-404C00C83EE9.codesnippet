@@ -3,38 +3,30 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>swift_cell_init</string>
+	<string>@swiftlabelinit</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>class &lt;#Cell#&gt;: UICollectionViewCell {
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupView()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setupView() {
-        
-    }
-    
-    
-    
-}</string>
+	<string>let _ = UILabel()
+            .adhere(toSuperview: &lt;#view#&gt;) {
+                $0.centerX.equalToSuperview()
+                $0.top.equalToSuperview().offset(20)
+                $0.width.height.greaterThanOrEqualTo(10)
+            }
+            .font(UIFont.FontName_PierSans700, 24)
+            .color(UIColor(hexString: "#232323")!)
+            .textAlignment(.center)
+            .text("")</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>9D569D2D-2312-4047-A327-D781AAA31B10</string>
+	<string>E0BD92BB-86D7-412D-99E0-404C00C83EE9</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetSummary</key>
-	<string>swift_cell_init</string>
+	<string>@swiftlabelinit</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>swift_cell_init</string>
+	<string>@swiftlabelinit</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

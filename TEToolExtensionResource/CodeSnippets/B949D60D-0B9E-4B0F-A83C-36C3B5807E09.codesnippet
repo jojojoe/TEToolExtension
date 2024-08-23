@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>@swiftimageinit</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>let _ = UIImageView()
+            .adhere(toSuperview: view) {
+                $0.left.equalToSuperview().offset(10)
+                $0.top.equalToSuperview().offset(20)
+                $0.width.height.equalTo(44)
+            }
+            .image("")
+            .contentMode(.scaleAspectFill)</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>B949D60D-0B9E-4B0F-A83C-36C3B5807E09</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>@swiftimageinit</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>@swiftimageinit</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

@@ -3,29 +3,22 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>danlimoshi</string>
+	<string>@swiftWeakOhter</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
-		<string>TopLevel</string>
+		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>+ (PTTextData*)sharedTextDataManager;
-static PTTextData *sharedTextDataManager = nil;
-+ (PTTextData*)sharedTextDataManager
-{
-    if (sharedTextDataManager == nil) {
-        sharedTextDataManager = [[PTTextData alloc] init];
-    }
-    return sharedTextDataManager;
-}</string>
+	<string>[weak self, weak splashVC] in
+            guard let `self` = self, let splashVC = splashVC else {return}</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>F6AC9723-3DF0-4E20-AB1D-18DC504123E7</string>
+	<string>6224932A-2343-4476-A877-A1DC7DF1A3D4</string>
 	<key>IDECodeSnippetLanguage</key>
-	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetSummary</key>
-	<string>单例模式</string>
+	<string>@swiftWeakOhter</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>MYCode Singleton </string>
+	<string>@swiftWeakOhter</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

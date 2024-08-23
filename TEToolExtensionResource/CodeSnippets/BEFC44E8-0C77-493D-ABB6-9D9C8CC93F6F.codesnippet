@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>@swiftbtninit</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>let _ = DBDelayButton()
+            .adhere(toSuperview: view) {
+                $0.left.equalToSuperview().offset(10)
+                $0.top.equalToSuperview().offset(20)
+                $0.width.height.equalTo(44)
+            }
+            .backgroundColor(UIColor(hexString: "#232323")!)
+            .title("")
+            .titleColor(UIColor(hexString: "#FFFFFF")!)
+            .font(UIFont.FontName_PierSans, 12)
+            .target(target: self, action: #selector(btnClick), event: .touchUpInside)
+        @objc func btnClick() {
+            
+        }</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>BEFC44E8-0C77-493D-ABB6-9D9C8CC93F6F</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>@swiftbtninit</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>@swiftbtninit</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>
