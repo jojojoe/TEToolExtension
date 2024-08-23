@@ -15,21 +15,21 @@
     }
     @objc
     func textViewNotifitionAction(userInfo:NSNotification){
-
-        if &lt;#textView#&gt;.text.count &gt; &lt;#maxTextSize#&gt; {
-            let selectRange = &lt;#textView#&gt;.markedTextRange
+        guard let textView = userInfo.object as? UITextView else { return }
+        if textView.text.count &gt; &lt;#maxTextSize#&gt; {
+            let selectRange = textView.markedTextRange
             if let selectRange = selectRange {
-                let position =  &lt;#textView#&gt;.position(from: (selectRange.start), offset: 0)
+                let position =  textView.position(from: (selectRange.start), offset: 0)
                 if (position != nil) {
                     // 高亮部分不进行截取，否则中文输入会把高亮区域的拼音强制截取为字母，等高亮取消后再计算字符总数并截取
                     return
                 }
             }
 
-            &lt;#textView#&gt;.text = String(&lt;#textView#&gt;.text[..&lt;String.Index(encodedOffset: &lt;#maxTextSize#&gt;)])
+            textView.text = String(textView.text[..&lt;String.Index(encodedOffset: &lt;#maxTextSize#&gt;)])
 
             // 对于粘贴文字的case，粘贴结束后若超出字数限制，则让光标移动到末尾处
-            &lt;#textView#&gt;.selectedRange = NSRange(location: &lt;#textView#&gt;.text.count, length: 0)
+            textView.selectedRange = NSRange(location: textView.text.count, length: 0)
         }
         
         

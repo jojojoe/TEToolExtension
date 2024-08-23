@@ -17,8 +17,8 @@ extension TWEditBottomView: UITextFieldDelegate {
     }
     @objc
     func textViewNotifitionAction(userInfo:NSNotification){
-        guard let textView = userInfo.object as? UITextView else { return }
-        if textView.text.count &gt;= maxLableCount {
+        guard let textView = userInfo.object as? UITextField else { return }
+        if let textStr = textView.text, textStr.count &gt;= maxLableCount {
             let selectRange = textView.markedTextRange
             if let selectRange = selectRange {
                 let position =  textView.position(from: (selectRange.start), offset: 0)
@@ -26,12 +26,8 @@ extension TWEditBottomView: UITextFieldDelegate {
                     // 高亮部分不进行截取，否则中文输入会把高亮区域的拼音强制截取为字母，等高亮取消后再计算字符总数并截取
                     return
                 }
-                
             }
-            textView.text = String(textView.text[..&lt;String.Index(encodedOffset: maxLableCount)])
-            
-            // 对于粘贴文字的case，粘贴结束后若超出字数限制，则让光标移动到末尾处
-            textView.selectedRange = NSRange(location: textView.text.count, length: 0)
+            textView.text = String(textStr[..&lt;String.Index(encodedOffset: maxLableCount)])
         }
         
     }
@@ -78,7 +74,10 @@ extension TWEditBottomView: UITextFieldDelegate {
         
         return true
     }
-    
+    func textFieldShouldReturn(_ textField: UITextField) -&gt; Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }
 
 </string>

@@ -22,12 +22,13 @@
     }
     
     func setupView() {
-        contentImgV.contentMode = .scaleAspectFill
-        contentImgV.clipsToBounds = true
-        contentView.addSubview(contentImgV)
-        contentImgV.snp.makeConstraints {
-            $0.top.right.bottom.left.equalToSuperview()
-        }
+        contentImgV
+            .adhere(toSuperview: contentView) {
+                $0.top.right.bottom.left.equalToSuperview()
+            }
+            .image("")
+            .clipsToBounds()
+            .contentMode(.scaleAspectFill)
         
         
     }
