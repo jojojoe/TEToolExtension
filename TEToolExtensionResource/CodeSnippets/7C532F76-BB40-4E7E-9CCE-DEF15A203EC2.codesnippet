@@ -40,15 +40,18 @@ extension &lt;#CollectionView#&gt;: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -&gt; UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        let left: CGFloat = 0
+        return UIEdgeInsets(top: 0, left: left, bottom: 0, right: left)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -&gt; CGFloat {
-        return 1
+        let padding: CGFloat = 0
+        return padding
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -&gt; CGFloat {
-        return 1
+        let padding: CGFloat = 0
+        return padding
     }
     
 }
