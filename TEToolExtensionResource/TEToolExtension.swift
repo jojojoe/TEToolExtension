@@ -24,6 +24,7 @@ extension UIFont {
     public static let FontName_PierSans700 = "PierSans-Bold"
     public static let FontName_PierSans900 = "PierSans-Bold"
     public static let FontName_AvenirMedium = "Avenir-Medium"
+    public static let FontName_Avenir = "Avenir"
     public static let FontName_AvenirHeavy = "Avenir-Heavy"
     public static let FontName_AvenirBlack = "Avenir-Black"
     public static let FontName_NotoSansOriyaBold = "NotoSansOriya-Bold"
@@ -40,6 +41,13 @@ extension UIScreen {
     
     public static func height() -> CGFloat {
         return self.main.bounds.size.height
+    }
+    
+    public static func isDeviceIphone() -> Bool {
+        if Device.current.diagonal <= 4.7 {
+            return true
+        }
+        return false
     }
     
     public static func isDevice8SE() -> Bool {
