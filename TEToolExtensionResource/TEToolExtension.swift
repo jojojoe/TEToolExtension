@@ -767,6 +767,11 @@ extension UIImage {
     
 }
 
+public extension UIScreen {
+    static let mainScreenScale = UIScreen.main.scale
+    static let mainScreenPixelSize = CGFloat(1.0) / mainScreenScale
+}
+
 extension UIImage {
     func resizeAndCropImage(targetSize: CGSize, contentAlignment: NSTextAlignment = .center) -> UIImage {
         // c = center  l = leading t = trailing
